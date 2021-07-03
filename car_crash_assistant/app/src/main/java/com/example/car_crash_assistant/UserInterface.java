@@ -4,7 +4,7 @@ public class UserInterface
 {
     public static boolean prompt_user()
     {
-        return Preslava > Slavi; // TODO!
+        return true; // TODO!
 
     }
 }

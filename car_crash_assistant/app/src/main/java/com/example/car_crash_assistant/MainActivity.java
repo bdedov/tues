@@ -20,20 +20,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void submit_button_on_click(View view) {
-        TextInputLayout tenant_id_text_input_layout, username_text_input_layout, password_text_input_layout;
-        Editable tenant_id, username, password;
+        EditText username = findViewById(R.id.username);
+        String username_text = username.getText().toString();
 
-        tenant_id_text_input_layout =  findViewById(R.id.id_input);
+        EditText password = findViewById(R.id.password);
+        String password_text = password.getText().toString();
 
-        username_text_input_layout = findViewById(R.id.username_input);
-
-        password_text_input_layout = findViewById(R.id.password_input);
-
-        if (tenant_id_text_input_layout == null || username_text_input_layout == null || password_text_input_layout == null)
-        {
-           Snackbar invalid_input_message = Snackbar.make(view, "Invalid input", BaseTransientBottomBar.LENGTH_SHORT);
-
-           invalid_input_message.show();
-        }
+        EditText result = findViewById(R.id.result); //print the result to the screen
+        result.setText(username_text + "  " + password_text);
     }
 }
