@@ -11,6 +11,7 @@ public class CloudConnection
         this.username = username;
 
         this.password = password;
+        // TODO!
     }
 
     public void set_alarm(String severity)
