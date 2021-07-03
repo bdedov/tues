@@ -7,14 +7,14 @@
     tools:context=".MainActivity">
 
     <EditText
-        android:id="@+id/username"
+        android:id="@+id/tenant_id"
         android:layout_width="198dp"
         android:layout_height="57dp"
         android:layout_centerInParent="true"
-        android:layout_marginStart="41dp"
-        android:layout_marginLeft="41dp"
-        android:layout_marginTop="27dp"
-        android:hint="username"
+        android:layout_marginStart="40dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="108dp"
+        android:hint="tenant_id"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -25,21 +25,9 @@
         android:layout_centerInParent="true"
         android:layout_marginStart="40dp"
         android:layout_marginLeft="40dp"
-        android:layout_marginTop="101dp"
+        android:layout_marginTop="184dp"
         android:hint="password"
         android:inputType="textPassword"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/result"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginLeft="40dp"
-        android:layout_marginTop="188dp"
-        android:ems="10"
-        android:inputType="textPersonName"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -50,8 +38,8 @@
         android:layout_marginStart="41dp"
         android:layout_marginLeft="41dp"
         android:layout_marginTop="270dp"
-        android:onClick="submit_button_on_click"
-        android:text="Submit"
+        android:onClick="get_input"
+        android:text="Login"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

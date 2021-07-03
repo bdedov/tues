@@ -4,14 +4,10 @@ public class CloudConnection
 {
     String tenant_id, username, password;
 
-    public CloudConnection(String tenant_id, String username, String password)
+    public static boolean connect(String tenant_id, String password)
     {
-        this.tenant_id = tenant_id;
-
-        this.username = username;
-
-        this.password = password;
-        // TODO!
+        //TODO sockets :'(
+        return false;
     }
 
     public void set_alarm(String severity)
