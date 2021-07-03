@@ -4,7 +4,7 @@ public class CloudConnection
 {
     String tenant_id, username, password;
 
-    public static boolean connect(String tenant_id, String password)
+    public static boolean connect(String tenant_id, String username, String password)
     {
         //TODO sockets :'(
         return false;
