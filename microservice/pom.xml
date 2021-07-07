@@ -12,7 +12,7 @@
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
     <spring-boot-dependencies.version>1.5.17.RELEASE</spring-boot-dependencies.version>
-    <c8y.version>1009.0.17-SNAPSHOT</c8y.version>
+    <c8y.version>1009.0.12</c8y.version>
     <microservice.name>hello-microservice-java</microservice.name>
   </properties>
 
@@ -53,6 +53,15 @@
         <type>pom</type>
         <scope>import</scope>
       </dependency>
+      <dependency>
+        <groupId>com.nsn.cumulocity.clients-java</groupId>
+        <artifactId>java-client</artifactId>
+        <version>${c8y.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-websocket</artifactId>
+      </dependency>
     </dependencies>
   </dependencyManagement>
 
@@ -63,7 +72,7 @@
         <artifactId>spring-boot-maven-plugin</artifactId>
         <version>${spring-boot-dependencies.version}</version>
         <configuration>
-          <mainClass>c8y.example.App</mainClass>
+          <mainClass>c8y.App</mainClass>
         </configuration>
         <executions>
           <execution>

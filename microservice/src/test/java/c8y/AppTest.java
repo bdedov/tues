@@ -1,4 +1,4 @@
-package c8y.example;
+package c8y;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
