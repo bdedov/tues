@@ -1,7 +1,6 @@
 package c8y;
 
 import java.net.URI;
-import java.util.Map;
 import javax.websocket.ClientEndpoint;
 import javax.websocket.CloseReason;
 import javax.websocket.ContainerProvider;
