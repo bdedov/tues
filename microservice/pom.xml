@@ -2,10 +2,10 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>c8y.example</groupId>
-  <artifactId>hello-microservice-java</artifactId>
+  <artifactId>crash-microservice</artifactId>
   <packaging>jar</packaging>
   <version>1.0.0-SNAPSHOT</version>
-  <name>hello-microservice-java</name>
+  <name>crash-microservice</name>
   <url>http://maven.apache.org</url>
 
   <properties>
@@ -13,7 +13,7 @@
     <maven.compiler.target>1.8</maven.compiler.target>
     <spring-boot-dependencies.version>1.5.17.RELEASE</spring-boot-dependencies.version>
     <c8y.version>1009.0.12</c8y.version>
-    <microservice.name>hello-microservice-java</microservice.name>
+    <microservice.name>crash-microservice</microservice.name>
   </properties>
 
   <repositories>
