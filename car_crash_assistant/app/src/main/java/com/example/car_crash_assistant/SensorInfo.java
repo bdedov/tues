@@ -6,24 +6,19 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 
+
 import org.json.JSONException;
 
 
-public class SensorInfo implements SensorEventListener
-{
-    private Context context;
-    private Sensor accelerometer;
-    private SensorManager sensorManager;
+public class SensorInfo implements SensorEventListener {
+    private final Sensor accelerometer;
+    private final SensorManager sensorManager;
 
-    public SensorInfo(Context context)
-    {
-        this.context = context;
+    public SensorInfo(Context context) {
         this.sensorManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
         this.accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         this.sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
-        CloudConnection.context = context;
     }
-
 
     @Override
     public void onSensorChanged(SensorEvent event)
@@ -43,9 +38,9 @@ public class SensorInfo implements SensorEventListener
 
     }
 
-    public boolean check_for_issues()
-    {
-
-        return true; // TODO!
-    }
+//    public boolean check_for_issues()
+//    {
+//
+//        return true; // TODO!
+//    }
 }
