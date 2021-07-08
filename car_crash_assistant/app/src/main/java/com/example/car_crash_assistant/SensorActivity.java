@@ -1,18 +1,51 @@
 package com.example.car_crash_assistant;
 
-public class SensorActivity
+import android.content.Context;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
+
+import org.json.JSONException;
+
+
+public class SensorActivity implements SensorEventListener
 {
-    float max_acceleration, max_angular_acceleration;
+    private Context context;
+    private Sensor accelerometer;
+    private SensorManager sensorManager;
 
-    public SensorActivity(float max_acceleration, float max_angular_acceleration)
+    public SensorActivity(Context context)
     {
-        this.max_acceleration = max_acceleration;
+        this.context = context;
+        this.sensorManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
+        this.accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        this.sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
+        CloudConnection.context = context;
+    }
 
-        this.max_angular_acceleration = max_angular_acceleration;
+
+    @Override
+    public void onSensorChanged(SensorEvent event)
+    {
+        try
+        {
+            Measurement.send(event.values);
+        }
+        catch (JSONException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
     }
 
     public boolean check_for_issues()
     {
+
         return true; // TODO!
     }
 }
