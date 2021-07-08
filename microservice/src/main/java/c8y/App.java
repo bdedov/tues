@@ -2,9 +2,12 @@ package c8y;
 
 import com.cumulocity.microservice.autoconfigure.MicroserviceApplication;
 import com.cumulocity.microservice.settings.service.MicroserviceSettingsService;
+import com.cumulocity.model.authentication.CumulocityBasicCredentials;
 import com.cumulocity.rest.representation.event.EventRepresentation;
 import com.cumulocity.sdk.client.Platform;
+import com.cumulocity.sdk.client.PlatformImpl;
 import org.joda.time.DateTime;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -12,15 +15,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.HashMap;
-import java.util.Map;
 
 @MicroserviceApplication
 @RestController
 public class App {
     public static int j = 0;
 
-    public static void check_collision(Platform platform, String accelerationX, String accelerationY, String accelerationZ, String latitude, String longitude){
+    public static void check_collision(Platform platform, double accelerationX, double accelerationY, double accelerationZ){
         boolean collision = false;
 
         //TODO
@@ -34,7 +35,7 @@ public class App {
 
     public static void main (String[] args) {
         //SpringApplication.run(App.class, args);
-        //Platform platform = new PlatformImpl("https://bdedov.1.stage.c8y.io/", CumulocityBasicCredentials.from("email:pass"));
+        Platform platform = new PlatformImpl("https://bdedov.1.stage.c8y.io/", CumulocityBasicCredentials.from("email:pass"));
         String[] info = new String[3];
         for(int i=0; i<3; i++){
             info[i] = "";
@@ -74,12 +75,20 @@ public class App {
                         j++;
                     }else{
                         info[j] = message;
-                        String accelerationX = "";
-                        String accelerationY = "";
-                        String accelerationZ = "";
-                        String latitude = "";
-                        String longitude = "";
+                        message = message.substring(1, message.length() - 1);
+                        double accelerationX = 0;
+                        double accelerationY = 0;
+                        double accelerationZ = 0;
+                        JSONObject json = new JSONObject(message);
                         System.out.println(message);
+                        if(json.getJSONObject("data").getJSONObject("data").has("c8y_Acceleration")){
+                            System.out.println("ima goo");
+                            accelerationX = json.getJSONObject("data").getJSONObject("data").getJSONObject("c8y_Acceleration").getJSONObject("accelerationX").getDouble("value");
+                            accelerationY = json.getJSONObject("data").getJSONObject("data").getJSONObject("c8y_Acceleration").getJSONObject("accelerationY").getDouble("value");
+                            accelerationZ = json.getJSONObject("data").getJSONObject("data").getJSONObject("c8y_Acceleration").getJSONObject("accelerationZ").getDouble("value");
+                            check_collision(platform, accelerationX, accelerationY, accelerationZ);
+                        }
+
                     }
                 }
             });
