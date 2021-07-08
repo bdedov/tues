@@ -3,7 +3,9 @@ package c8y;
 import com.cumulocity.microservice.autoconfigure.MicroserviceApplication;
 import com.cumulocity.microservice.settings.service.MicroserviceSettingsService;
 import com.cumulocity.model.authentication.CumulocityBasicCredentials;
+import com.cumulocity.model.idtype.GId;
 import com.cumulocity.rest.representation.event.EventRepresentation;
+import com.cumulocity.rest.representation.inventory.ManagedObjectRepresentation;
 import com.cumulocity.sdk.client.Platform;
 import com.cumulocity.sdk.client.PlatformImpl;
 import org.joda.time.DateTime;
@@ -27,7 +29,11 @@ public class App {
         //TODO
         if(collision){
             var event = new EventRepresentation();
-            event.setType("c8y_acceleration");
+            ManagedObjectRepresentation source = new ManagedObjectRepresentation();
+            source.setId(GId.asGId(4719658));
+            event.setSource(source);
+            event.setType("CrashEvent");
+            event.setText("There is a crash!");
             event.setDateTime(DateTime.now());
             platform.getEventApi().create(event);
         }
@@ -35,7 +41,7 @@ public class App {
 
     public static void main (String[] args) {
         //SpringApplication.run(App.class, args);
-        Platform platform = new PlatformImpl("https://bdedov.1.stage.c8y.io/", CumulocityBasicCredentials.from("email:pass"));
+        Platform platform = new PlatformImpl("https://bdedov.1.stage.c8y.io/", CumulocityBasicCredentials.from("id/username:password"));
         String[] info = new String[3];
         for(int i=0; i<3; i++){
             info[i] = "";
@@ -80,9 +86,8 @@ public class App {
                         double accelerationY = 0;
                         double accelerationZ = 0;
                         JSONObject json = new JSONObject(message);
-                        System.out.println(message);
+                        //System.out.println(message);
                         if(json.getJSONObject("data").getJSONObject("data").has("c8y_Acceleration")){
-                            System.out.println("ima goo");
                             accelerationX = json.getJSONObject("data").getJSONObject("data").getJSONObject("c8y_Acceleration").getJSONObject("accelerationX").getDouble("value");
                             accelerationY = json.getJSONObject("data").getJSONObject("data").getJSONObject("c8y_Acceleration").getJSONObject("accelerationY").getDouble("value");
                             accelerationZ = json.getJSONObject("data").getJSONObject("data").getJSONObject("c8y_Acceleration").getJSONObject("accelerationZ").getDouble("value");
