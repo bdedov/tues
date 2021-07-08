@@ -2,14 +2,15 @@ package com.example.car_crash_assistant;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
+
 public class MainActivity extends AppCompatActivity {
     AlertDialog errorMessage;
+    SensorInfo sensor_activity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +28,8 @@ public class MainActivity extends AppCompatActivity {
                 });
     }
 
-    public void get_input(View view) {
+    public void get_input(View view)
+    {
         EditText tenant_id = findViewById(R.id.tenant_id);
         String tenant_text = tenant_id.getText().toString();
 
@@ -37,9 +39,8 @@ public class MainActivity extends AppCompatActivity {
         EditText password = findViewById(R.id.password);
         String password_text = password.getText().toString();
 
-        if(!CloudConnection.connect(tenant_text, username_text, password_text))
-        {
-            errorMessage.show();
-        }
+        CloudConnection.create(username_text, password_text);
+        sensor_activity = new SensorInfo(this);
+
     }
 }

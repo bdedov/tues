@@ -9,13 +9,13 @@ import android.hardware.SensorManager;
 import org.json.JSONException;
 
 
-public class SensorActivity implements SensorEventListener
+public class SensorInfo implements SensorEventListener
 {
     private Context context;
     private Sensor accelerometer;
     private SensorManager sensorManager;
 
-    public SensorActivity(Context context)
+    public SensorInfo(Context context)
     {
         this.context = context;
         this.sensorManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
