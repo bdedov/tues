@@ -26,6 +26,10 @@ public class App {
     public static void check_collision(Platform platform, double accelerationX, double accelerationY, double accelerationZ){
         boolean collision = false;
 
+        if(accelerationX > 1.5 || accelerationY > 1.5 || accelerationZ) {
+            collision = true;   
+        }
+        
         //TODO
         if(collision){
             var event = new EventRepresentation();
