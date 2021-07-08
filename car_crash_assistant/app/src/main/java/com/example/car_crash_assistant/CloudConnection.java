@@ -52,7 +52,8 @@ public class CloudConnection
                 @Override
                 public Map<String, String> getHeaders() throws AuthFailureError {
                     Map<String, String> params = new HashMap<String, String>();
-                    params.put("Authorization", "Basic " + getToken());
+                    params.put("Authorization", "Basic " + auth_token);
+                    params.put("Content-Type", "application/json");
                     return params;
                 }
             };
