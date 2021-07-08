@@ -30,16 +30,13 @@ public class MainActivity extends AppCompatActivity {
 
     public void get_input(View view)
     {
-        EditText tenant_id = findViewById(R.id.tenant_id);
-        String tenant_text = tenant_id.getText().toString();
-
         EditText username = findViewById(R.id.username);
         String username_text = username.getText().toString();
 
         EditText password = findViewById(R.id.password);
         String password_text = password.getText().toString();
 
-        CloudConnection.create(username_text, password_text);
+        CloudConnection.create(username_text, password_text, this);
         sensor_activity = new SensorInfo(this);
 
     }

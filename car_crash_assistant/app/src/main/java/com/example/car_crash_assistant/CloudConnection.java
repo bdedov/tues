@@ -8,29 +8,22 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
-
-import javax.net.ssl.SSLSocket;
-import javax.net.ssl.SSLSocketFactory;
 
 public class CloudConnection
 {
     public static final String URL = "https://bdedov.1.stage.c8y.io/measurement/measurements";
-    public static Context context;
     private static String auth_token;
+    private static RequestQueue queue;
 
-    public static void create(String username, String password)
+    public static void create(String username, String password, Context context)
     {
         generateToken(username, password);
+        queue = Volley.newRequestQueue(context);
     }
 
     private static void generateToken(String username, String password) {
@@ -44,7 +37,6 @@ public class CloudConnection
 
     public static void post_measurement(JSONObject json)
     {
-        RequestQueue queue = Volley.newRequestQueue(context);
         JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.POST, URL, json,
                 new Response.Listener<JSONObject>() {
                 @Override
@@ -68,8 +60,8 @@ public class CloudConnection
         queue.add(jsonRequest);
     }
 
-    public static void set_alarm(String severity)
-    {
-        // TODO!
-    }
+//    public static void set_alarm(String severity)
+//    {
+//        // TODO!
+//    }
 }
