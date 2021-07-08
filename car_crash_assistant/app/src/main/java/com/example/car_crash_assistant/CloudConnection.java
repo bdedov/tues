@@ -25,8 +25,8 @@ import javax.net.ssl.SSLSocketFactory;
 public class CloudConnection
 {
     public static final String URL = "https://bdedov.1.stage.c8y.io/measurement/measurements";
-    private static String auth_token;
     public static Context context;
+    private static String auth_token;
 
     public static void create(String username, String password)
     {
@@ -45,7 +45,7 @@ public class CloudConnection
     public static void post_measurement(JSONObject json)
     {
         RequestQueue queue = Volley.newRequestQueue(context);
-        JsonObjectRequest stringRequest = new JsonObjectRequest(Request.Method.POST, URL, json,
+        JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.POST, URL, json,
                 new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
@@ -56,16 +56,16 @@ public class CloudConnection
                     public void onErrorResponse(VolleyError error) {
                         System.out.println("Error: " + error.toString());
                     }
-        }){
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("Authorization", "Basic " + getToken());
-                return params;
-            }
-        };
+            }){
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    Map<String, String> params = new HashMap<String, String>();
+                    params.put("Authorization", "Basic " + getToken());
+                    return params;
+                }
+            };
 
-        queue.add(stringRequest);
+        queue.add(jsonRequest);
     }
 
     public static void set_alarm(String severity)
