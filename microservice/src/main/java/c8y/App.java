@@ -26,11 +26,10 @@ public class App {
     public static void check_collision(Platform platform, double accelerationX, double accelerationY, double accelerationZ){
         boolean collision = false;
 
-        if(accelerationX > 1.5 || accelerationY > 1.5 || accelerationZ) {
+        if(accelerationX > 1.5 || accelerationY > 1.5 || accelerationZ > 1.5) {
             collision = true;   
         }
         
-        //TODO
         if(collision){
             var event = new EventRepresentation();
             ManagedObjectRepresentation source = new ManagedObjectRepresentation();
@@ -44,7 +43,7 @@ public class App {
     }
 
     public static void main (String[] args) {
-        //SpringApplication.run(App.class, args);
+        SpringApplication.run(App.class, args);
         Platform platform = new PlatformImpl("https://bdedov.1.stage.c8y.io/", CumulocityBasicCredentials.from("id/username:password"));
         String[] info = new String[3];
         for(int i=0; i<3; i++){
