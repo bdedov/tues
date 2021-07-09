@@ -1,7 +1,6 @@
 package c8y;
 
 import com.cumulocity.microservice.autoconfigure.MicroserviceApplication;
-import com.cumulocity.microservice.settings.service.MicroserviceSettingsService;
 import com.cumulocity.model.authentication.CumulocityBasicCredentials;
 import com.cumulocity.model.idtype.GId;
 import com.cumulocity.rest.representation.event.EventRepresentation;
@@ -10,7 +9,7 @@ import com.cumulocity.sdk.client.Platform;
 import com.cumulocity.sdk.client.PlatformImpl;
 import org.joda.time.DateTime;
 import org.json.JSONObject;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.SpringApplication;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,9 +26,9 @@ public class App {
         boolean collision = false;
 
         if(accelerationX > 1.5 || accelerationY > 1.5 || accelerationZ > 1.5) {
-            collision = true;   
+            collision = true;
         }
-        
+
         if(collision){
             var event = new EventRepresentation();
             ManagedObjectRepresentation source = new ManagedObjectRepresentation();
