@@ -9,11 +9,12 @@ import java.util.Date;
 public class Alarm
 {
     private final static SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
-    private final static JSONObject alarm = new JSONObject();
-    private final static JSONObject source = new JSONObject();
 
     public static void send() throws JSONException
     {
+        JSONObject alarm = new JSONObject();
+        JSONObject source = new JSONObject();
+        
         source.put("name", "crash-app");
         source.put("id", "4719658");
 
