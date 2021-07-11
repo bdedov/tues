@@ -43,8 +43,8 @@ public class App {
     }
 
     public static void main (String[] args) {
-        //SpringApplication.run(App.class, args);
-        Platform platform = new PlatformImpl("https://bdedov.1.stage.c8y.io/", CumulocityBasicCredentials.from("tenant/username:pass"));
+        SpringApplication.run(App.class, args);
+        Platform platform = new PlatformImpl("https://bdedov.1.stage.c8y.io/", CumulocityBasicCredentials.from("id/username:password"));
         String[] info = new String[3];
         for(int i=0; i<3; i++){
             info[i] = "";

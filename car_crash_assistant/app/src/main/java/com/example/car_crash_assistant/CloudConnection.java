@@ -1,17 +1,111 @@
 package com.example.car_crash_assistant;
 
+import android.content.Context;
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+import org.json.JSONObject;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
+
+
 public class CloudConnection
 {
-    String tenant_id, username, password;
+    public static final String MEASUREMENT_URL = "https://bdedov.1.stage.c8y.io/measurement/measurements";
+    public static final String ALARM_URL = "https://bdedov.1.stage.c8y.io/alarm/alarms";
+    private static String auth_token;
+    private static RequestQueue queue;
 
-    public static boolean connect(String tenant_id, String username, String password)
+    public static boolean create(String username, String password, Context context)
     {
-        //TODO sockets :'(
-        return false;
+        generateToken(username, password);
+
+        boolean isAuthorized = check_credentials();
+
+        if(isAuthorized)
+            queue = Volley.newRequestQueue(context);
+
+        return isAuthorized;
     }
 
-    public void set_alarm(String severity)
+    private static void generateToken(String username, String password) {
+        String str = username + ":" + password;
+        auth_token = android.util.Base64.encodeToString(str.getBytes(), 0);
+    }
+
+    public static void post_measurement(JSONObject json)
     {
-        // TODO!
+        JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.POST, MEASUREMENT_URL, json,
+                new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                }
+            }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                    }
+            }){
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    Map<String, String> params = new HashMap<String, String>();
+                    params.put("Authorization", "Basic " + auth_token);
+                    params.put("Content-Type", "application/json");
+                    return params;
+                }
+            };
+
+        queue.add(jsonRequest);
+    }
+
+    public static void post_alarm(JSONObject json)
+    {
+        JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.POST, ALARM_URL, json,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+            }
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("Authorization", "Basic " + auth_token);
+                params.put("Content-Type", "application/json");
+                return params;
+            }
+        };
+
+        queue.add(jsonRequest);
+    }
+
+    private static boolean check_credentials() {
+        int response_code = 0;
+
+        try
+        {
+            URL url = new URL("https://bdedov.1.stage.c8y.io/platform");
+            HttpURLConnection connection = (HttpURLConnection)url.openConnection();
+            connection.setRequestMethod("GET");
+            connection.setRequestProperty("Authorization", "Basic " + auth_token);
+            connection.connect();
+
+            response_code = connection.getResponseCode();
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
+        return response_code != 401;
     }
 }
