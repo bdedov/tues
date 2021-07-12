@@ -21,6 +21,7 @@ public class CloudConnection
     public static final String MEASUREMENT_URL = "https://bdedov.1.stage.c8y.io/measurement/measurements";
     public static final String ALARM_URL = "https://bdedov.1.stage.c8y.io/alarm/alarms";
     private static String auth_token;
+    private static String auth_websock_token;
     private static RequestQueue queue;
 
     public static boolean create(String username, String password, Context context)
@@ -37,7 +38,9 @@ public class CloudConnection
 
     private static void generateToken(String username, String password) {
         String str = username + ":" + password;
-        auth_token = android.util.Base64.encodeToString(str.getBytes(), 0);
+        String web_str = "t3193151/" + username + ":" + password;
+        auth_token = android.util.Base64.encodeToString(str.getBytes(), android.util.Base64.NO_WRAP);
+        auth_websock_token = android.util.Base64.encodeToString(web_str.getBytes(), android.util.Base64.NO_WRAP);
     }
 
     public static void post_measurement(JSONObject json)
@@ -107,5 +110,10 @@ public class CloudConnection
         }
 
         return response_code != 401;
+    }
+
+    public static String getWebSockToken()
+    {
+        return auth_websock_token;
     }
 }
