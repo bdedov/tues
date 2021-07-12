@@ -1,19 +1,13 @@
 package com.example.car_crash_assistant;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.view.View;
 import android.widget.EditText;
-
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
-
-import java.net.URI;
-import java.net.URISyntaxException;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -57,6 +51,8 @@ public class MainActivity extends AppCompatActivity {
             Intent executing_activity_intent = new Intent(this, ExecutingActivity.class);
 
             this.startActivity(executing_activity_intent);
+
+            new Event().start(); //start event listener
         }
     }
 }
