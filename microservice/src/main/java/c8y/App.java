@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.math.BigInteger;
 import java.net.URI;
 import java.net.URISyntaxException;
 
@@ -22,7 +23,7 @@ import java.net.URISyntaxException;
 public class App {
     public static int j = 0;
 
-    public static void check_collision(Platform platform, double accelerationX, double accelerationY, double accelerationZ){
+    public static void check_collision(Platform platform, BigInteger sourceId, double accelerationX, double accelerationY, double accelerationZ){
         boolean collision = false;
 
         if(accelerationX > 1.5 || accelerationY > 1.5 || accelerationZ > 1.5) {
@@ -32,7 +33,7 @@ public class App {
         if(collision){
             var event = new EventRepresentation();
             ManagedObjectRepresentation source = new ManagedObjectRepresentation();
-            source.setId(GId.asGId(4719658));
+            source.setId(GId.asGId(sourceId));
             event.setSource(source);
             event.setType("CrashEvent");
             event.setText("There is a crash!");
@@ -87,13 +88,15 @@ public class App {
                         double accelerationX = 0;
                         double accelerationY = 0;
                         double accelerationZ = 0;
+                        BigInteger sourceId;
                         JSONObject json = new JSONObject(message);
-                        //System.out.println(message);
+                        System.out.println(message);
                         if(json.getJSONObject("data").getJSONObject("data").has("c8y_Acceleration")){
                             accelerationX = json.getJSONObject("data").getJSONObject("data").getJSONObject("c8y_Acceleration").getJSONObject("accelerationX").getDouble("value");
                             accelerationY = json.getJSONObject("data").getJSONObject("data").getJSONObject("c8y_Acceleration").getJSONObject("accelerationY").getDouble("value");
                             accelerationZ = json.getJSONObject("data").getJSONObject("data").getJSONObject("c8y_Acceleration").getJSONObject("accelerationZ").getDouble("value");
-                            check_collision(platform, accelerationX, accelerationY, accelerationZ);
+                            sourceId = json.getJSONObject("data").getJSONObject("data").getJSONObject("source").getBigInteger("id");
+                            check_collision(platform, sourceId, accelerationX, accelerationY, accelerationZ);
                         }
 
                     }
