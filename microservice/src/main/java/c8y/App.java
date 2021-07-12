@@ -31,7 +31,7 @@ public class App {
         }
 
         if(collision){
-            var event = new EventRepresentation();
+            EventRepresentation event = new EventRepresentation();
             ManagedObjectRepresentation source = new ManagedObjectRepresentation();
             source.setId(GId.asGId(sourceId));
             event.setSource(source);
@@ -43,8 +43,8 @@ public class App {
     }
 
     public static void main (String[] args) {
-        //SpringApplication.run(App.class, args);
-        Platform platform = new PlatformImpl("https://bdedov.1.stage.c8y.io/", CumulocityBasicCredentials.from("tenant/username:pass"));
+        SpringApplication.run(App.class, args);
+        Platform platform = new PlatformImpl("https://bdedov.1.stage.c8y.io/", CumulocityBasicCredentials.from("tenant/username:password"));
         String[] info = new String[3];
         for(int i=0; i<3; i++){
             info[i] = "";
