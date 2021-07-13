@@ -11,6 +11,7 @@ import com.cumulocity.sdk.client.PlatformImpl;
 import org.joda.time.DateTime;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.SpringApplication;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -43,8 +44,8 @@ public class App {
     }
 
     public static void main (String[] args) {
-        SpringApplication.run(App.class, args);
-        Platform platform = new PlatformImpl("https://bdedov.1.stage.c8y.io/", CumulocityBasicCredentials.from("id/username:password"));
+        //SpringApplication.run(App.class, args);
+        Platform platform = new PlatformImpl("https://bdedov.1.stage.c8y.io/", CumulocityBasicCredentials.from("t3193151/denislav.i.ivanov.2017@elsys-bg.org:75t5wwneqeNK6Qp"));
         String[] info = new String[3];
         for(int i=0; i<3; i++){
             info[i] = "";
@@ -55,7 +56,10 @@ public class App {
             client.addMessageHandler(new WebSocketClientEndpoint.MessageHandler() {
                 @Override
                 public void handleMessage(String message) {
+                    System.out.println("msg: " + message);
+
                     if(j == 0) {
+                        System.out.println("client: " + message);
                         info[j] = message;
                         j++;
                         int i = info[0].indexOf("clientId");
@@ -130,10 +134,9 @@ public class App {
                     "      \"clientId\":\"" + clientId[0] +"\"\n" +
                     "   }\n" +
                     "]");
+            while(true);
         } catch (URISyntaxException | InterruptedException e) {
             e.printStackTrace();
-        }
-        while(true) {
         }
     }
 

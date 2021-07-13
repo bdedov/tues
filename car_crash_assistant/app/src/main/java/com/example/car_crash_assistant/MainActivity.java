@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
 
             this.startActivity(executing_activity_intent);
 
-            new Event().start(); //start event listener
+            ExecutingService service = new ExecutingService();
         }
     }
 }

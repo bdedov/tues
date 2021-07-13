@@ -1,5 +1,13 @@
 package com.example.car_crash_assistant;
 
+import android.app.Notification;
+import android.app.PendingIntent;
+import android.app.Service;
+import android.content.Context;
+import android.content.Intent;
+
+import androidx.core.app.NotificationCompat;
+
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
 import org.json.JSONObject;
@@ -10,6 +18,12 @@ public class Event extends Thread
 {
     private String msg;
     private final String URL = "wss://bdedov.1.stage.c8y.io/notification/realtime";
+    Service context;
+
+    public Event(Service context)
+    {
+        this.context = context;
+    }
 
     private final String handshake = "[\n" +
             "   {\n" +
@@ -38,7 +52,7 @@ public class Event extends Thread
     {
         try
         {
-            final String clientId[] = {""};
+            String clientId[] = {""};
             URI host = new URI(URL);
             WebSocketClient socket = new WebSocketClient(host) {
                 @Override
@@ -54,9 +68,20 @@ public class Event extends Thread
                             clientId[0] = object.getString("clientId");
                         }
                         if (!object.has("successful")) {
-                            /* Insert alarm logic here */
-                            //Alarm.send();
+                            if(object.getJSONObject("data").getJSONObject("data").getString("type").equals("CrashEvent")) {
+                                Intent prompt_notification_intent = new Intent(context, PromptActivity.class);
+                                PendingIntent prompt_notification_pending_intent = PendingIntent.getActivity(context, 0, prompt_notification_intent, 0);
+                                Notification prompt_notification = new NotificationCompat.Builder(context, ExecutingService.prompt_channel_id)
+                                        .setContentTitle("Attention")
+                                        .setContentText("Is there an issue?")
+                                        .setSmallIcon(R.drawable.ic_android)
+                                        .setContentIntent(prompt_notification_pending_intent)
+                                        .build();
+
+                                context.startForeground(2, prompt_notification);
+                            }
                         }
+                        System.out.println(message);
                     }
                     catch (Exception e)
                     {
