@@ -1,0 +1,16 @@
+{
+  "name": "Device registration - Lora Provider",
+  "ngModules": [
+    "c8y.deviceRegistrationLora"
+  ],
+  "import": [
+    "core/deviceRegistration"
+  ],
+  "category": "Device",
+  "description": "Provides device registration wizard functionality for actility devices.",
+  "js": [
+    "drLoraProvider.module.js",
+    "deviceRegistrationLora.component.js",
+    "deviceRegistrationLoraProvider.service.js"
+  ]
+}

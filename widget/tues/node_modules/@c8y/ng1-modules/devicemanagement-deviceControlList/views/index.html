@@ -1,0 +1,166 @@
+<div ng-controller="deviceControlCtrl as vm">
+  <c8y-ui-title-set
+    ng-if="vm.showTitle()"
+    title="'Device control'| translate"
+    subtitle="vm.subTitle()"
+  ></c8y-ui-title-set>
+
+  <c8y-ui-action-bar-set>
+    <li class="btn-group"
+      action-bar-position="left"
+    >
+      <button class="btn btn-default"
+        type="button"
+        uib-tooltip="{{ 'Pending' | translate }}"
+        tooltip-placement="bottom"
+        tooltip-append-to-body="true"
+        ng-click="changeFilter('PENDING')"
+        ng-class="{active: btnActive('PENDING')}"
+      >
+        <i ng-class="statusClass('pending')" 
+          c8y-icon="{{ statusIcon('pending') }}"
+        ></i>
+        <span ng-show="btnActive('PENDING')">
+          {{ 'Pending' | translate }}
+        </span>
+      </button>
+
+      <button class="btn btn-default"
+        type="button"
+        uib-tooltip="{{ 'Executing' | translate }}"
+        tooltip-placement="bottom"
+        tooltip-append-to-body="true"
+        ng-click="changeFilter('EXECUTING')"
+        ng-class="{active: btnActive('EXECUTING')}"
+      >
+        <i ng-class="statusClass('executing')" 
+          c8y-icon="{{ statusIcon('executing') }}"
+        ></i>
+        <span ng-show="btnActive('EXECUTING')">
+          {{ 'Executing' | translate }}
+        </span>
+      </button>
+
+      <button class="btn btn-default"
+        type="button"
+        uib-tooltip="{{ 'Failed' | translate }}"
+        tooltip-placement="bottom"
+        tooltip-append-to-body="true"
+        ng-click="changeFilter('FAILED')"
+        ng-class="{active: btnActive('FAILED')}"
+      >
+        <i ng-class="statusClass('failed')" 
+          c8y-icon="{{ statusIcon('failed') }}"
+        ></i>
+        <span ng-show="btnActive('FAILED')">
+          {{ 'Failed' | translate }}
+        </span>
+      </button>
+      
+      <button class="btn btn-default"
+        type="button"
+        uib-tooltip="{{ 'Successful' | translate }}"
+        tooltip-placement="bottom"
+        tooltip-append-to-body="true"
+        ng-click="changeFilter('SUCCESSFUL')"
+        ng-class="{active: btnActive('SUCCESSFUL')}"
+      >
+        <i ng-class="statusClass('successful')"
+          c8y-icon="{{ statusIcon('successful') }}" 
+        ></i>
+        <span ng-show="btnActive('SUCCESSFUL')">
+          {{ 'Successful' | translate }}
+        </span>
+      </button>
+
+      <button class="btn btn-default"
+        type="button"
+        ng-click="changeFilter()"
+        ng-class="{active: btnActive()}"
+        translate
+      >
+        All
+      </button>
+    </li>
+
+    <li ng-show="btnActive('PENDING')">
+      <button class="btn btn-link"
+        type="button"
+        ng-click="cancelAllPending()"
+      >
+        <i c8y-icon="times"></i>
+        {{ 'Cancel all' | translate }}
+      </button>
+    </li>
+
+    <c8y-realtime-btn
+      channel-name="vm.realtimeChannel"
+      subscriber-id="vm.realtimeSubscriberId"
+    ></c8y-realtime-btn>
+
+    <c8y-refresh-btn></c8y-refresh-btn>
+  </c8y-ui-action-bar-set>
+
+  <div class="c8y-empty-state text-center"
+    ng-if="operations.length == 0"
+  >
+    <h1 class="c8y-icon c8y-icon-energy c8y-icon-duocolor"></h1>
+    <h3 translate>
+      No recent operations found.
+    </h3>
+  </div>
+
+  <div class="list-group"
+    ng-if="operations.length"
+    ng-class="{'dd-low': operations.length < 10}"
+  >
+    
+    <div class="page-sticky-header list-group-item list-group-item-sticky-header flex-row  hidden-xs"
+      ng-init="displayOptions = getDisplayOptions()"
+    >
+     
+        <div class="list-item-icon flex-item-middle">
+          <i class="fa"></i>
+        </div>
+        <div class="list-item-actions p-l-80 flex-item-middle"></div>
+        <div class="list-item-body flex-item-middle">
+          <div class="content-flex-50">
+            <div class="col-6">
+              {{'Operation' | translate}}
+            </div>
+            <div class="col-3"
+              ng-show="displayOptions.showDeviceLink">
+              {{'Device' | translate}}
+            </div>
+            <div class="col-3">
+              {{'Date' | translate}}
+            </div>
+          </div>
+        </div>
+      
+      
+    </div>
+
+    <div
+      class="list-group-item collapsible"
+      ng-class="{'expanded': displayOptions.showDetails}"
+      ng-repeat="op in operations | orderBy:sortOperationsListByTime:true track by op.id"
+      ng-init="displayOptions = getDisplayOptions()"
+    >
+      <div
+        ng-if="isSingleOperation(op)"
+        device-control-single-operation-row-summary
+        operation="op"
+        display-options="displayOptions"
+      ></div>
+
+      <div
+        ng-if="isSingleOperation(op) && displayOptions.showDetails"
+        device-control-single-operation-row-details
+        operation="op"
+      ></div>
+
+    </div>
+  </div>
+  <c8y-load-more change-page-size></c8y-load-more>
+</div>

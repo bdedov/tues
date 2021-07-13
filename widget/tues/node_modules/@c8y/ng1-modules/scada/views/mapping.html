@@ -1,0 +1,97 @@
+<table class="table">
+  <colgroup>
+    <col width="20%">
+    <col width="20%">
+    <col width="20%">
+    <col width="20%">
+    <col width="148px">
+  </colgroup>
+  <thead>
+    <tr>
+      <th>
+        <label translate>Placeholder</label>
+      </th>
+      <th>
+        <label translate>Target</label>
+      </th>
+      <th>
+        <label translate>Mapped to</label>
+      </th>
+      <th>
+        <label translate>Current value</label>
+      </th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr
+      ng-repeat="mapping in mappings | orderBy:'placeholder'"
+      class="property"
+      ng-class="{ danger: hasError[mapping.placeholder] }"
+    >
+      <td class="text-truncate" title="{{ mapping.placeholder }}">
+        {{ mapping.placeholder }}
+      </td>
+      <td class="form-group-sm">
+        <span ng-show="devices.length == 1">
+          {{ devices[0].name }}
+        </span>
+        <div class="c8y-select-wrapper" ng-show="devices.length > 1">
+          <select
+            class="form-control"
+            ng-options="device.id as device.name for device in devices"
+            ng-model="deviceIds[mapping.placeholder]"
+            ng-change="onDeviceIdsChange()"
+            required
+            >
+          </select>
+          <span></span>
+        </div>
+      </td>
+      <td ng-switch="!!mapping.config.configSchema" class="text-truncate" title="{{ humanizeValue(mapping) }}">
+        <a
+          ng-switch-when="true"
+          class="btn btn-xs btn-default"
+          href=""
+          ng-click="editComputedProperty(mapping)"
+        >
+          <i c8y-icon="bolt"></i> {{ humanizeValue(mapping) }}
+        </a>
+        <span ng-switch-default>{{ humanizeValue(mapping) }}</span>
+      </td>
+      <td class="text-truncate">
+          <span title=" {{ propertyValueFor(mapping) }}">
+            {{ propertyValueFor(mapping) }}
+          </span>
+      </td>
+      <td>
+        <div class="d-flex flex-end">
+          <button
+            type="button"
+            class="btn btn-danger btn-xs showOnHover pull-right"
+            title="{{ 'Clear mapping' | translate }}"
+            ng-click="clearMapping(mapping)"
+          >
+            <i c8y-icon="scissors"></i>
+          </button>
+          <button
+            type="button"
+            class="btn btn-primary btn-xs showOnHover pull-right"
+            title="{{ 'Assign fieldbus property' | translate }}"
+            ng-click="setFieldbusMapping(mapping)"
+          >
+            <i c8y-icon="tasks"></i>
+          </button>
+          <button
+            type="button"
+            class="btn btn-primary btn-xs showOnHover pull-right"
+            title="{{ 'Assign device property' | translate }}"
+            ng-click="setMapping(mapping)"
+          >
+            <i c8y-icon="pencil"></i>
+          </button>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>

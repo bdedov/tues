@@ -1,0 +1,65 @@
+<div class="sticky-top has-sticky-card-header hidden-xs">
+  <div class="c8y-list__item">
+    <div class="c8y-list__item__block">
+      <div class="c8y-list__item__icon p-l-0">
+        <i class="fa"></i>
+      </div>
+      <div class="c8y-list__item__body">
+        <div class="content-flex-20">
+          <div class="col-4">
+            <label class="m-0">{{'Active' | translate}}</label>
+          </div>
+          <div class="col-4">
+            <label class="m-0">{{'Unhealthy' | translate}}</label>
+          </div>
+          <div class="col-4">
+            <label class="m-0">{{'Desired' | translate}}</label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ul class="c8y-list__group" >
+  <li class="c8y-list__item collapsible" ng-class="{'expanded':vm.isOpen}">
+    <div class="c8y-list__item__block">
+      <div class="c8y-list__item__icon p-l-0">
+        <i
+          c8y-icon="{{ vm.getStatusIcon(vm.status) }}"
+          uib-tooltip="{{ vm.status | translate }}"
+          tooltip-placement="right"
+        ></i>
+      </div>
+      <div class="c8y-list__item__body">
+        <div class="content-flex-20">
+          <div class="col-4 text-truncate">
+            <span class="text-label-small visible-xs-inline" translate>Active</span> {{ vm.instancesStatus.active || 0 }}
+          </div>
+          <div class="col-4 text-truncate">
+            <span class="text-label-small visible-xs-inline" translate>Unhealthy</span> {{ vm.instancesStatus.unhealthy || 0 }}
+          </div>
+          <div class="col-4 text-truncate">
+            <span class="text-label-small visible-xs-inline" translate>Desired</span> {{ vm.instancesStatus.desired || 0 }}
+          </div>
+        </div>
+      </div>
+      <div class="c8y-list__item__actions" ng-if="vm.showDetails()">
+        <button
+          type="button"
+          title="{{ 'Expand' | translate }}"
+          class="collapse-btn"
+          ng-click="vm.openItem()"
+        >
+          <i c8y-icon="chevron-down"></i>
+        </button>
+      </div>
+    </div>
+    <div uib-collapse="!vm.isOpen">
+      <c8y-app-instances-details
+        instances-details="vm.statusFragment.instances"
+        class="c8y-list__item__collapse--container d-block"
+      ></c8y-app-instances-details>
+    </div>
+  </li>
+</ul>

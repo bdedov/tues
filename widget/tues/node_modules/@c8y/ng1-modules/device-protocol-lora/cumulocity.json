@@ -1,0 +1,10 @@
+{
+    "name": "LORA mappings",
+    "ngModules": [
+      "c8y.lora"
+    ],
+    "js": [
+      "lora.module.js",
+      "lora-device.provider.js"
+    ]
+  }

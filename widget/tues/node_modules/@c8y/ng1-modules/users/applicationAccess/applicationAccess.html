@@ -1,0 +1,121 @@
+<div class="legend form-block" 
+  ng-show="marketApps.length"
+  translate
+>
+  Subscribed applications
+</div>
+
+<div ng-show="marketApps.length && disabledEdit && noOwnerAvailable()"
+  class="alert alert-info" translate>
+  You don't have the permission required to manage application access for {{ user.userName }}.
+</div>
+
+<ul class="c8y-list__group" >
+  <li class="c8y-list__item bg-inherit" ng-repeat="application in marketApps">
+    <div class="c8y-list__item__block">
+    <div class="c8y-list__item__check p-l-0 flex-item-middle">
+      <label class="c8y-checkbox">
+        <input
+          type="checkbox"
+          id="{{ 'appmarket' + $index }}"
+          ng-checked="isAccessAllowed(application)"
+          ng-click="toggleAccess(application)"
+          ng-disabled="isDisabled(application)"
+        />
+        <span></span>
+      </label>
+    </div>
+    <div class="c8y-list__item__appicon p-l-0">
+      <c8y-app-icon app="::application"></c8y-app-icon>
+    </div>
+    <div class="c8y-list__item__body">
+      <div class="d-flex">
+        <label class="text-normal" title="{{ ::application | humanizeAppName }}" for="{{ 'appmarket' + $index }}">
+          {{::application | humanizeAppName}} <br />
+          <small class="text-muted">{{::application.contextPath}}</small>
+        </label>
+        <button
+          type="button"
+          class="btn-clean m-l-auto"
+          ng-show="alreadyInGlobalRole(application)"
+          popover-append-to-body="true"
+          popover-placement="right auto"
+          popover-trigger="'focus'"
+          uib-popover="{{
+            'This application is already made available in a global role' | translate
+          }}"
+        >
+          <i c8y-icon="info-circle" class="text-info"></i>
+        </button>
+        <button
+          type="button"
+          class="btn-clean m-l-auto"
+          ng-show="notAvailableInOwner(application) && !alreadyInGlobalRole(application)"
+          popover-append-to-body="true"
+          popover-placement="right auto"
+          popover-trigger="'focus'"
+          uib-popover="{{ 'This application is not accessible by the owner.' | translate }}"
+        >
+          <i c8y-icon="exclamation-circle" class="text-warning"></i>
+        </button>
+    </div>
+  </li>
+</ul>
+
+<div class="legend form-block p-t-16" 
+  ng-show="privateApps.length"
+>
+  {{ 'Custom applications' | translate }}
+  <button class="btn-clean text-14 m-l-4"
+    type="button"
+    uib-popover="{{'Applications owned by your tenant' | translate}}"
+    popover-append-to-body="true"
+    popover-placement="right auto"
+    popover-trigger="'focus'"
+  >
+    <i c8y-icon="question-circle-o" class="text-info"></i>
+  </button>
+</div>
+<div class="alert alert-info"
+  ng-show="privateApps.length && disabledEdit && noOwnerAvailable()"
+  translate
+>
+  You don't have the permission required to manage application access for {{ user.userName }}.
+</div>
+<ul class="c8y-list__group" >
+  <li class="c8y-list__item bg-inherit" ng-repeat="application in privateApps">
+    <div class="c8y-list__item__block">
+      <div class="c8y-list__item__check p-l-0 flex-item-middle">
+        <label class="c8y-checkbox">
+          <input
+            type="checkbox"
+            id="{{ 'appprivate' + $index }}"
+            ng-checked="isAccessAllowed(application)"
+            ng-click="toggleAccess(application)"
+            ng-disabled="isDisabled(application)"
+          />
+          <span></span>
+        </label>
+      </div>
+      <div class="c8y-list__item__appicon p-l-0">
+        <c8y-app-icon app="::application"></c8y-app-icon>
+      </div>
+      <div class="c8y-list__item__body">
+        <label title="{{ ::application | humanizeAppName }}" for="{{ 'appprivate' + $index }}">
+          {{::application | humanizeAppName}}<br />
+          <small class="text-muted">{{::application.contextPath}}</small>
+        </label>
+        <button class="btn-clean m-l-auto" 
+          type="button"
+          popover-append-to-body="true"
+          popover-placement="right auto"
+          popover-trigger="'focus'"
+          uib-popover="{{ 'This application is already made available in a global role' | translate }}"
+          ng-show="alreadyInGlobalRole(application)"
+        >
+          <i c8y-icon="info-circle"class="text-info"></i>
+        </button>
+      </div>
+    </div>
+  </li>
+</ul>

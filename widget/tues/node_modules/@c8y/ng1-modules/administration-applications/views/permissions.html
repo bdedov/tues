@@ -1,0 +1,39 @@
+<div ng-controller="permissionsCtrl as vm" class="card card--grid content-fullpage grid__col--6-6--md">
+  <div class="inner-scroll bg-white">
+    <div class="card-header separator sticky-top large-padding">
+      <h4 translate>Required permissions</h4>
+    </div>
+    <div class="card-block large-padding bg-inherit overflow-visible p-t-0">
+      <div ng-if="!vm.requiredRoles.length" class="alert alert-info m-t-16">
+        <translate>No permissions required.</translate>
+      </div>
+      <c8y-roles-matrix
+        ng-if="vm.requiredRoles.length"
+        available-roles="vm.requiredRoles"
+        selected-roles="vm.application.requiredRoles"
+        read-only="true"
+        class="bg-inherit"
+      >
+      </c8y-roles-matrix>
+    </div>
+  </div>
+
+  <div class="inner-scroll bg-gray-white">
+    <div class="card-header separator sticky-top large-padding">
+      <h4 translate>Provided roles</h4>
+    </div>
+    <div class="card-block large-padding overflow-visible p-t-0 bg-inherit">
+      <div ng-if="!vm.roles.length" class="alert alert-info m-t-16">
+        <translate>No roles provided.</translate>
+      </div>
+      <c8y-roles-matrix
+        ng-if="vm.roles.length"
+        available-roles="vm.roles"
+        selected-roles="vm.application.roles"
+        read-only="true"
+        class="bg-inherit"
+        >
+      </c8y-roles-matrix>
+    </div>
+  </div>
+</div>

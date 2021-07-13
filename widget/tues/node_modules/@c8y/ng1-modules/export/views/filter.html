@@ -1,0 +1,14 @@
+<div class="c8y-list__item__block">
+  <div class="c8y-list__item__check p-r-0">
+    <label class="c8y-checkbox">
+      <input type="checkbox" ng-model="filter.enabled" />
+      <span></span>
+    </label>
+  </div>
+  <div class="c8y-list__item__body">
+    <div class="col-sm-3 m-b-8">
+      <label class="" ng-bind="filter.label | translate"></label>
+    </div>
+    <div class="col-sm-9" ng-include="filter.template"></div>
+  </div>
+</div>

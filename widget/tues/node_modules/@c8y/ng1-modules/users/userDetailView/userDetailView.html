@@ -1,0 +1,115 @@
+<c8y-breadcrumbs-set>
+  <c8y-breadcrumbs-item
+    path="#users"
+    label="{{ 'Users' | translate }}"
+    icon="c8y-user"
+  ></c8y-breadcrumbs-item>
+</c8y-breadcrumbs-set>
+
+<form name="forms.userForm" role="form" ng-submit="checkPassword(user)" novalidate>
+  <div class="card content-fullpage d-grid grid__col--6-6--md">
+
+    <div class="inner-scroll bg-white">
+      <div class="card-header large-padding separator sticky-top">
+        <h4 class="card-title" translate>Identification</h4>
+      </div>
+      <div class="card-block large-padding">
+        <c8y-ui-edit-user
+          user="user"
+          forms="forms"
+          password="password"
+          disabled-edit="!canEditUser(currentUser, user) || hasExternalOrigin"
+          hide-active="!canActivateUser(currentUser, user)"
+          hide-owner="!vm.FEATURE_USER_HIERARCHY"
+          hide-delegate="!vm.FEATURE_USER_HIERARCHY"
+          hide-language="true"
+          user-tfa-enforced="userTfaEnforced"
+          top-level-tfa-enforced="topLevelTfaEnforced"
+        >
+        </c8y-ui-edit-user>
+      </div>
+    </div>
+
+    <div class="bg-gray-white inner-scroll">
+      <div class="card-header large-padding sticky-top separator">
+        <h4 class="card-title" translate>Global roles</h4>
+      </div>
+      <ul class="c8y-list__group large-padding no-border-last">
+        <li class="c8y-list__item bg-inherit" ng-repeat="group in groups | orderBy: 'name'">
+          <div class="c8y-list__item__block">
+            <div class="c8y-list__item__radio p-l-0">
+              <label class="c8y-checkbox"
+                ng-class="{'disabled': !canEditUserGroups(currentUser) || restrictedByOwner(group)}"
+              >
+                <input
+                  type="checkbox"
+                  id="{{ 'groupcheckbox' + $index }}"
+                  ng-model="_groups[group.id]"
+                  ng-disabled="!canEditUserGroups(currentUser) || restrictedByOwner(group) || hasExternalOrigin"
+                />
+                <span></span>
+              </label>
+            </div>
+            <div class="c8y-list__item__body">
+              <label
+                title="{{ ::group.name | translate }}"
+                for="{{ 'groupcheckbox' + $index }}"
+                class="text-normal d-flex"
+              >
+                <span class="text-truncate">
+                  {{::group.name | translate}}
+                </span>
+                <button
+                  class="m-l-auto btn-clean"
+                  type="button"
+                  ng-click="$event.preventDefault()"
+                  ng-show="restrictedByOwner(group)"
+                  popover-append-to-body="true"
+                  popover-trigger="'focus mouseenter'"
+                  popover-placement="auto"
+                  uib-popover="{{
+                    'Only global roles defined on the owner can be defined on the owned user.'
+                      | translate
+                  }}"
+                >
+                  <i c8y-icon="exclamation-circle" class="text-warning"></i>
+                </button>
+              </label>
+              <p class="small text-muted">{{::group.description | translate}}</p>
+            </div>
+          </div>
+        </li>
+      </ul>
+
+      <div ng-show="showAcl()" class="bg-inherit card--grid__separator-top--white">
+        <div class="card-header large-padding sticky-top separator ">
+          <h4 translate>User permissions</h4>
+        </div>
+        <div class="card-block large-padding">
+          <c8y-acl-editor acl="user.devicePermissions"></c8y-acl-editor>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-footer large-padding separator grid__col--fullspan">
+      <button
+        title="{{ 'Cancel' | translate }}"
+        type="button"
+        ng-click="vm.cancel()"
+        class="btn btn-default"
+      >
+        {{ 'Cancel' | translate }}
+      </button>
+      <button
+        title="{{ 'Save' | translate }}"
+        ng-if="canEditUser(currentUser, user)"
+        ng-class="{'btn-save': showPassword}"
+        class="btn btn-primary"
+        type="submit"
+        ng-disabled="forms.userForm.$invalid || saving || !forms.userForm.$dirty"
+      >
+        {{ 'Save' | translate }}
+      </button>
+    </div>
+  </div>
+</form>

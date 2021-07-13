@@ -1,0 +1,73 @@
+
+<div class="card-header sticky-top separator large-padding">
+  <h4 translate>Subscribed applications</h4>
+</div>
+<div class="card-block p-t-0 large-padding">
+  <ul class="c8y-list__group"
+  >
+    <li class="c8y-list__item collapsible"
+      ng-class="{'expanded': vm.isOpen(a)}"
+      ng-repeat="a in vm.associatedApplications"
+    >
+      <div class="c8y-list__item__block">
+        <div class="c8y-list__item__appicon p-l-0">
+          <c8y-app-icon app="::a" class="d-contents"></c8y-app-icon>
+        </div>
+        <div class="c8y-list__item__body flex-item-middle">
+          <div class="flex-row">
+            <button class="btn-clean text-truncate"
+              ng-click="vm.openItem(a)"
+              ng-if="vm.hasApplicationStatus(a)"
+              title="{{ a | humanizeAppName }}"
+            >
+              {{a | humanizeAppName}}
+            </button>
+            <p ng-if="!vm.hasApplicationStatus(a)" 
+              title="{{ a | humanizeAppName }}"
+              class="text-truncate"
+            >
+              {{a | humanizeAppName}}
+            </p>
+            <button 
+              uib-tooltip="{{::vm.getStringTooltip(a.id) | translate}}"
+              tooltip-placement="right"
+              class="btn-clean m-l-4" 
+              ng-if="::vm.getStatusIcon(a.id)"
+            >
+              <i c8y-icon="{{::vm.getStatusIcon(a.id)}}">
+              </i>
+            </button>
+            <button title="{{ 'unsubscribe' | translate }}" 
+              ng-click="vm.dissociate(a)"
+              class="btn btn-primary btn-xs showOnHover flex-item-right"
+              translate
+            >
+              unsubscribe
+            </button>
+          </div>
+        </div>
+        
+        <div class="c8y-list__item__actions">
+          <button type="button"
+            ng-if="vm.hasApplicationStatus(a)"
+            title="{{'Expand' | translate}}"
+            class="collapse-btn"
+            ng-click="vm.openItem(a)"
+          >
+            <i c8y-icon="chevron-down"></i>
+          </button>
+          <span class="p-r-40"
+          ng-if="!vm.hasApplicationStatus(a)"></span>
+        </div>
+      </div>
+      <div uib-collapse="!vm.isOpen(a)">
+        <c8y-app-instances-details instances-details="vm.memoizedGetSubscriptionInstances(a)"
+        instances-status="vm.instancesStatus"
+        class="c8y-list__item__collapse--container d-block"
+        >
+        </c8y-app-instances-details>
+      </div>
+    </li>
+  </ul>
+</div>
+
