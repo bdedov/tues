@@ -55,7 +55,10 @@ public class App {
             client.addMessageHandler(new WebSocketClientEndpoint.MessageHandler() {
                 @Override
                 public void handleMessage(String message) {
+                    System.out.println("msg: " + message);
+
                     if(j == 0) {
+                        System.out.println("client: " + message);
                         info[j] = message;
                         j++;
                         int i = info[0].indexOf("clientId");
@@ -132,10 +135,9 @@ public class App {
                     "      \"clientId\":\"" + clientId[0] +"\"\n" +
                     "   }\n" +
                     "]");
+            while(true);
         } catch (URISyntaxException | InterruptedException e) {
             e.printStackTrace();
-        }
-        while(true) {
         }
     }
 
