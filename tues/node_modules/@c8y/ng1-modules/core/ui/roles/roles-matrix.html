@@ -1,0 +1,129 @@
+<table class="table table-striped bg-inherit">
+  <thead class="bg-inherit">
+    <tr class="bg-inherit">
+      <th class="sticky-top has-sticky-card-header" translate>Type</th>
+      <th class="sticky-top has-sticky-card-header text-center">
+        <span translate>Read</span><br />
+        <label class="c8y-checkbox d-inline-block" ng-if="!vm.readOnly">
+          <input
+            type="checkbox"
+            ng-click="::vm.selectAll('READ')"
+            ng-checked="vm.allSelected('READ')"
+          />
+          <span></span>
+        </label>
+      </th>
+      <th class="sticky-top has-sticky-card-header text-center">
+        <span translate>Admin</span>
+        <button class="btn-clean"
+          type="button"
+          uib-popover="{{::vm.STRINGS.ADMIN | translate}}"
+          popover-placement="top"
+          popover-append-to-body="true"
+          popover-trigger="'focus'"
+        >
+          <i c8y-icon="question-circle-o" class="text-info"></i>
+        </button><br />
+        <label class="c8y-checkbox d-inline-block" ng-if="!vm.readOnly">
+          <input
+            type="checkbox"
+            ng-click="::vm.selectAll('ADMIN')"
+            ng-checked="vm.allSelected('ADMIN')"
+          />
+          <span></span>
+        </label>
+      </th>
+      <th class="sticky-top has-sticky-card-header text-center">
+        <span translate>Create</span><br />
+        <label class="c8y-checkbox d-inline-block" ng-if="!vm.readOnly">
+          <input
+            type="checkbox"
+            ng-click="::vm.selectAll('CREATE')"
+            ng-checked="vm.allSelected('CREATE')"
+          />
+          <span></span>
+        </label>
+      </th>
+      <th
+        class="sticky-top has-sticky-card-header text-center"
+        ng-if="::vm.hasPermissionWithAccess('UPDATE')"
+      >
+        <span translate>Update</span><br />
+        <label class="c8y-checkbox d-inline-block" ng-if="!vm.readOnly">
+          <input
+            type="checkbox"
+            ng-click="::vm.selectAll('UPDATE')"
+            ng-checked="vm.allSelected('UPDATE')"
+          />
+          <span></span>
+        </label>
+      </th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr ng-repeat="group in vm.groupedPermissions | orderBy:'category'">
+      <td>
+        {{::vm.categoryLabel(group) | translate}}
+        <button 
+          type="button"
+          class="btn-clean m-l-4"
+          ng-show="::vm.STRINGS.PERMISSIONS_GLOBAL[group.category]"
+          popover-placement="right"
+          popover-append-to-body="true"
+          popover-trigger="'focus'"
+          uib-popover="{{::vm.STRINGS.PERMISSIONS_GLOBAL[group.category] | translate}}">
+          <i c8y-icon="question-circle-o" class="text-info"></i>
+       </button>
+      </td>
+      <td class="text-center">
+        <label class="c8y-checkbox d-inline-block" 
+          ng-show="::vm.hasPermission(group.permissions, 'READ')"
+         ng-class="{'disabled' : vm.readOnly}">
+          <input
+            type="checkbox"
+            ng-model="::vm.selectedPermissions[vm.permissionId(group.permissions, 'READ')]"
+            ng-disabled="vm.readOnly"
+          />
+          <span></span>
+        </label>
+      </td>
+      <td class="text-center">
+        <label class="c8y-checkbox d-inline-block" 
+          ng-show="::vm.hasPermission(group.permissions, 'ADMIN')"
+          ng-class="{'disabled' : vm.readOnly}">
+          <input
+            type="checkbox"
+            ng-model="::vm.selectedPermissions[vm.permissionId(group.permissions, 'ADMIN')]"
+            ng-disabled="vm.readOnly"
+          />
+          <span></span>
+        </label>
+      </td>
+      <td class="text-center">
+        <label class="c8y-checkbox d-inline-block" 
+          ng-show="::vm.hasPermission(group.permissions, 'CREATE')"
+          ng-class="{'disabled' : vm.readOnly}">
+          <input
+            type="checkbox"
+            ng-model="::vm.selectedPermissions[vm.permissionId(group.permissions, 'CREATE')]"
+            ng-disabled="vm.readOnly"
+          />
+          <span></span>
+        </label>
+      </td>
+      <td class="text-center" ng-if="vm.hasPermissionWithAccess('UPDATE')">
+        <label class="c8y-checkbox d-inline-block" 
+          ng-show="::vm.hasPermission(group.permissions, 'UPDATE')"
+          ng-class="{'disabled' : vm.readOnly}">
+          <input
+            type="checkbox"
+            ng-model="::vm.selectedPermissions[vm.permissionId(group.permissions, 'UPDATE')]"
+            ng-disabled="vm.readOnly"
+          />
+          <span></span>
+        </label>
+      </td>
+    </tr>
+  </tbody>
+</table>

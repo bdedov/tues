@@ -1,0 +1,40 @@
+<div class="inner-scroll d-flex d-col">
+  <div class="card-header separator large-padding sticky-top">
+    <h4 class="card-title">
+      {{ 'Command' | translate }}
+    </h4>
+  </div>
+
+  <div class="card-block d-flex d-col flex-grow large-padding">
+    <div class="flex-row p-b-16">
+      <button class=" btn btn-default btn-sm"
+        type="button"
+        ng-click="getPredefinedCommand()"
+        title="{{ 'Display a list of predefined commands' | translate }}"
+      >
+        {{ 'Predefined commands' | translate }}
+      </button>
+      <div class="flex-item-right">
+        <device-status device="deviceStatus.device" refresh="deviceStatus.refresh"></device-status>
+      </div>
+    </div>
+    <textarea class="form-control inner-scroll flex-grow bg-gray-lighter"
+      ng-model="command.text">
+    </textarea>
+  </div>
+
+  <div class="card-footer large-padding separator">
+    <button class="btn btn-primary"
+      type="button"
+      ng-if="isDeliveryTypeSupported(deliveryType, command)"
+      ng-repeat="deliveryType in standardDeliveryTypes"
+      ng-click="execute(command, deliveryType)"
+      ng-switch="deliveryType"
+      ng-disabled="!command.text || sendingCommand"
+    >
+      <span title="{{ getExecuteButtonLabel(deliveryType) }}">
+        {{ getExecuteButtonLabel(deliveryType) }}
+      </span>
+    </button>
+  </div>
+</div>

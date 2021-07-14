@@ -1,0 +1,56 @@
+<div class="modal-inner-scroll">
+  <div ng-if="vm.errors().length">
+    <h1 class="text-danger text-center p-t-24" style="font-size:4em;">
+      <i c8y-icon="exclamation-circle"></i>
+    </h1>
+    <ul class="list-group text-danger">
+      <li class="list-group-item" ng-repeat="error in vm.errors()">
+        <i c8y-icon="c8y-device-protocols"></i>
+        <strong class="m-l-4">{{ error.id }}</strong>
+        {{ error.msg | translate }}
+      </li>
+    </ul>
+  </div>
+
+  <div ng-if="vm.created().length || vm.updated().length">
+    <h1 class="text-success text-center p-t-24" style="font-size:4em;">
+      <i c8y-icon="check-circle"></i>
+    </h1>
+
+    <div ng-if="vm.created().length">
+      <p class="lead text-success text-center m-b-0 p-8">
+        <strong translate>Created</strong>
+      </p>
+        <div class="list-group list-group-links">
+          <button class="list-group-item text-truncate" ng-click="vm.gotoDetail(model)" ng-repeat="model in vm.created()">
+            <i c8y-icon="c8y-device-protocols"></i>
+            <strong class="m-l-4">{{ model.id }}</strong>
+            {{ vm.name(model) }}
+          </button>
+        </div>
+    </div>
+
+    <div ng-if="vm.updated().length">
+      <p class="lead text-success text-center m-b-0 p-8">
+        <strong translate>Updated</strong>
+      </p>
+        <div class="list-group list-group-links" >
+          <button class="list-group-item text-truncate" ng-click="vm.gotoDetail(model)" ng-repeat="model in vm.updated()">
+            <i c8y-icon="c8y-device-protocols m-r-4"></i>
+            <strong> {{ model.id }} </strong>
+            {{ vm.name(model) }}
+          </button>
+        </div>
+    </div>
+  </div>
+</div>
+
+<div class="c8y-wizard-footer">
+  <button
+    title="{{ 'Complete' | translate }}"
+    class="btn btn-primary"
+    ng-click="vm.finish()"
+  >
+    {{ 'Complete' | translate }}
+  </button>
+</div>

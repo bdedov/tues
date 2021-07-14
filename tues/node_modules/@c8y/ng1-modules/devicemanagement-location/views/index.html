@@ -1,0 +1,142 @@
+<div data-ng-controller="locationCtrl">
+  <c8y-ui-action-bar-set>
+    <c8y-realtime-btn class="btn btn-link" subscriber-id="id"></c8y-realtime-btn>
+
+    <button class="btn btn-link" title="{{ 'Center map' | translate }}" ng-click="centerMap()">
+      <i c8y-icon="dot-circle-o"></i> {{ 'Center map' | translate }}
+    </button>
+  </c8y-ui-action-bar-set>
+
+  <div class="card content-fullpage card--grid grid__col--8-4--md">
+    <leaflet
+      width="100%"
+      height="100%"
+      markers="markers"
+      center="center"
+      defaults="mapDefaults"
+      event-broadcast="events"
+      id="locationId"
+      style="min-height: 30vh"
+    ></leaflet>
+
+    <div class="d-flex d-col bg-inherit content-fullpage">
+      <div class="card-header separator">
+        <span class="h4 card-title" translate>Device location</span>
+        <button
+          tabindex="0"
+          uib-popover-html="'Device location may be set by the device itself, or manually in the platform' | translate"
+          popover-append-to-body="true"
+          popover-placement="left"
+          popover-trigger="'focus'"
+          class="btn-clean"
+        >
+          <i c8y-icon="question-circle-o" class="text-info m-l-4"></i>
+        </button>
+      </div>
+      <div class="inner-scroll">
+        <form
+          class="card-block"
+          ng-class="{'form-read-only': !noeditable}"
+          name="locationForm"
+          novalidate
+        >
+          <div
+            class="form-group m-b-24"
+            ng-class="{'has-error': invalid('locationForm', 'latitude')}"
+          >
+            <label><span translate>Latitude</span> (°)</label>
+            <input
+              type="number"
+              name="latitude"
+              class="form-control"
+              ng-model="location.lat"
+              ng-pattern="pattern.latitude"
+            />
+          </div>
+
+          <div
+            class="form-group m-b-24"
+            ng-class="{'has-error': invalid('locationForm', 'longitude')}"
+          >
+            <label><span translate>Longitude</span> (°)</label>
+            <input
+              type="number"
+              name="longitude"
+              class="form-control"
+              ng-model="location.lng"
+              ng-pattern="pattern.longitude"
+            />
+          </div>
+
+          <div
+            class="form-group m-b-24"
+            ng-class="{'has-error': invalid('locationForm', 'altitude')}"
+          >
+            <label><span translate>Altitude</span> (m)</label>
+            <input
+              type="number"
+              name="altitude"
+              class="form-control"
+              ng-model="location.alt"
+              ng-pattern="pattern.altitude"
+            />
+          </div>
+        </form>
+        <form
+          class="card-block bg-gray-white"
+          name="addressForm"
+          ng-show="noeditable"
+          novalidate
+          ng-submit="gotoAddress(location.address)"
+        >
+          <div class="form-group">
+            <label>{{ 'Find lat/long by address' | translate }}</label>
+            <div class="input-group input-group-search">
+              <input
+                type="text"
+                ng-model="location.address"
+                placeholder="{{ 'e.g.' | translate }} Speditionstraße 13, Düsseldorf"
+                class="form-control"
+              />
+              <span class="input-group-btn">
+                <button title="{{ 'Search' | translate }}" class="btn btn-clean" type="submit">
+                  <i c8y-icon="search"></i>
+                </button>
+              </span>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="card-footer separator">
+        <a
+          ng-show="!noeditable"
+          href=""
+          title="{{ 'Edit location' | translate }}"
+          class="btn btn-default"
+          ng-click="noeditable = !noeditable"
+        >
+          {{ 'Edit location' | translate }}
+        </a>
+        <button
+          ng-show="noeditable"
+          title="{{ 'Cancel' | translate }}"
+          class="btn btn-default"
+          ng-click="cancel()"
+          translate
+        >
+          Cancel
+        </button>
+        <button
+          title="{{ 'Save' | translate }}"
+          ng-show="noeditable"
+          class="btn btn-primary"
+          ng-disabled="locationForm.$invalid"
+          ng-click="save()"
+          translate
+        >
+          Save
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

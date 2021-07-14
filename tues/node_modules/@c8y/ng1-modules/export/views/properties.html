@@ -1,0 +1,86 @@
+<div class="export-properties">
+  <table class="table vertical-middle form-group">
+    <colgroup>
+      <col width="47.5%" />
+      <col width="47.5%" />
+      <col width="5%" />
+    </colgroup>
+    <thead>
+      <th>
+        <label>{{ 'Column' | translate }}</label>
+      </th>
+      <th>
+        <label>{{ 'Path' | translate }}</label>
+      </th>
+      <th></th>
+    </thead>
+    <tbody>
+      <tr
+        class="property"
+        ng-repeat="property in api.fields"
+        ng-form="forms.property{{ $index }}"
+        ng-class="{'has-error': forms.property{{ $index }}.$invalid}"
+      >
+        <td class="wideCell">
+          <label class="editable">
+            <input class="form-control property-label"
+              data-ng-model="property.column"
+              placeholder="{{ 'Column' | translate }}"
+              style="max-width:calc({{ property.column.length || 10 }} * 1ch + 14px)"
+              required
+            />
+            <span>
+              <span ng-if="property.column">{{ property.column }}</span>
+              <span class="text-muted" ng-if="!property.column">{{ 'Column' | translate}}</span>
+            </span>
+          </label>
+        </td>
+        <td>
+          <label class="editable">
+            <input class="form-control property-label"
+              data-ng-model="property.path"
+              placeholder="{{ 'Path' | translate }}"
+              style="max-width:calc({{ property.path.length|| 10 }} * 1ch + 14px)"
+              required
+              ng-disabled="property.default"
+            />
+            <span ng-if="property.path">{{ property.path }}</span
+            ><span class="text-muted" ng-if="!property.path">{{ 'Path' | translate }}</span>
+          </label>
+        </td>
+        <td>
+          <button ng-if="!property.default"
+            title="{{ 'Delete property' | translate }}"
+            type="button"
+            class="btn btn-link showOnHover pull-right"
+            ng-click="api.remove($index); forms['property' + $index].$setDirty();"
+          >
+            <i c8y-icon="minus-circle" class="text-danger"></i>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div class="btn-add-block-row m-t-8">
+  <button class="btn btn-add-block"
+    title="{{ 'Add' | translate }}"
+    type="button"
+    ng-click="api.add();"
+  >
+    <i c8y-icon="plus-circle"></i>
+    {{ 'Add' | translate }}
+  </button>
+  <button class="btn btn-add-block"
+    title="{{ 'Add predefined' | translate }}"
+    type="button"
+    ng-click="api.addPredefined();"
+  >
+    <i c8y-icon="plus-circle"></i>
+    {{ 'Add predefined' | translate }}
+  </button>
+  <div class="flex-grow m-l-8"
+    ng-if="api.template"
+    ng-include="api.template"
+  ></div>
+</div>

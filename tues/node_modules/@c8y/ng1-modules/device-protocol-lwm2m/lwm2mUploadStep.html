@@ -1,0 +1,36 @@
+<div class="c8y-wizard-body p-t-16">
+  <p class="text-center p-b-16">
+    <span translate>Start by uploading a DDF or XML file</span>
+  </p>
+
+  <file-picker
+    files="vm.files"
+    multiple="false"
+    required="true"
+    ng-disabled="vm.processingStatus.inProgress"
+    display-drop-zone="true"
+    processing-status="vm.processingStatus"
+    on-file-selected="vm.upload(vm.files)"
+    class="d-block p-b-16"
+  >
+  </file-picker>
+</div>
+
+<div class="c8y-wizard-footer">
+  <button
+    title="{{ 'Back' | translate }}"
+    class="btn btn-default"
+    ng-click="vm.wizardCtrl.goToIndex(0)"
+    translate
+  >
+    Back
+  </button>
+  <button
+    title="{{ 'Cancel' | translate }}"
+    class="btn btn-default"
+    ng-click="vm.wizardCtrl.dismiss()"
+    translate
+  >
+    Cancel
+  </button>
+</div>

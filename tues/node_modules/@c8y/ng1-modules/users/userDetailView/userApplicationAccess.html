@@ -1,0 +1,53 @@
+<c8y-breadcrumbs-set>
+  <c8y-breadcrumbs-item
+    path="#users"
+    label="{{ 'Users' | translate }}"
+    icon="c8y-user"
+  ></c8y-breadcrumbs-item>
+</c8y-breadcrumbs-set>
+
+<div class="row">
+  <div class="col-md-8">
+    <div class="card card--fullpage">
+      <div class="card-header separator" >
+        <h4>{{'Application access' | translate}}</h4>
+      </div>
+      <div class="inner-scroll">
+        <div class="card-block">
+          <div class="alert alert-info" translate ng-show="vm.hasAppManagement">
+            This user is assigned a global role with "Application management" permission. Therefore all
+            applications are accessible.
+          </div>
+          <c8y-application-access
+            user="vm.user"
+            all-selected="vm.hasAppManagement"
+            allowed-applications="vm.user.applications"
+            disabled-edit="vm.hasAppManagement || vm.hasExternalOrigin"
+          >
+          </c8y-application-access>
+        </div>
+      </div>
+      <div class="card-footer separator">
+        <button
+          title="{{ 'Cancel' | translate }}"
+          type="button"
+          class="btn btn-default"
+          ng-click="vm.cancel()"
+          translate
+        >
+          Cancel
+        </button>
+        <button
+          title="{{ 'Save' | translate }}"
+          type="button"
+          class="btn btn-primary"
+          ng-click="vm.save()"
+          ng-disabled="vm.hasAppManagement || vm.hasExternalOrigin"
+          translate
+        >
+          Save
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

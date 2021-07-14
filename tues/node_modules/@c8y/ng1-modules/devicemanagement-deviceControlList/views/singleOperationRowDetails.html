@@ -1,0 +1,76 @@
+<div>
+  <div class="p-l-24 p-r-24 m-t-16 separator-top">
+    <div class="row p-t-16 p-b-16">
+      <div class="col-md-4">
+        <div class="legend form-block">
+          {{'Details' | translate }}
+        </div>
+        <ul class="list-unstyled small">
+          <li class="p-t-4 p-b-4 flex-row separator-bottom" 
+            ng-if="operation.bulkOperationId"
+          >
+            <label class="small m-b-0 m-r-8 flex-item-v-start" translate>
+              Bulk operation
+            </label>
+            <span class="flex-item-right">
+              <a ng-click="c8yBulkOperationDetailsService.openDetails(operation.bulkOperationId)">
+                {{'See details' | translate}}
+              </a>
+            </span>
+          </li>
+          <li class="p-t-4 p-b-4 flex-row separator-bottom"
+            data-ng-repeat="(key, label) in getStandardKeys(operation)"
+          >
+            <label class="small m-b-0 m-r-8 flex-item-v-start">
+              {{label | translate}}
+            </label>
+            <span title="{{ operation[key] | translate }}" class="flex-item-right text-truncate-wrap">
+              {{ operation[key] | translate }}
+            </span>
+          </li>
+          <li class="p-t-4 p-b-4 flex-row separator-bottom">
+            <label class="small m-b-0 m-r-8 flex-item-v-start">
+              {{'Result' | translate}}
+            </label>
+            <span class="flex-item-right text-truncate-wrap"
+              title=" {{operation.c8y_Command.result}}"
+              ng-if="operation.c8y_Command.result"
+            >
+              {{operation.c8y_Command.result}}
+            </span>
+            <span class="flex-item-right "
+              ng-if="!operation.c8y_Command.result"
+            >
+              -
+            </span>
+          </li>
+          <li class="p-t-4 p-b-4 flex-row separator-bottom"
+            data-ng-repeat="key in getNonStandardKeys(operation)"
+          >
+            <label class="small m-0">
+              {{key | humanize2}}
+            </label>
+            <span title="{{operation[key] | json}}" class="flex-item-right text-truncate-wrap">
+              {{operation[key] | json}}
+            </span>
+          </li>
+        </ul>
+      </div>
+      <div class="col-md-1"></div>
+      <div class="col-md-7">
+        <div class="legend form-block"
+          translate
+        >
+          History of changes
+        </div>
+        <div class="empty-list dd-high">
+          <c8y-audit-list
+            filter="{source: operation.id}"
+            source-device-id="{{operation.deviceId}}"
+            reverse="true"
+          ></c8y-audit-list>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

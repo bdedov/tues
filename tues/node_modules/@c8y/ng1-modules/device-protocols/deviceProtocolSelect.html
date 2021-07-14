@@ -1,0 +1,38 @@
+<div class="modal-body">
+  <p class="lead text-center m-0" translate>
+    Select one of the available options
+  </p>
+  <p c8y-guide-docs>
+    <small class="text-muted" translate>
+      Find your protocol in the
+      <a c8y-guide-href="devices/overview/">Device guides`KEEP_ORIGINAL`</a>
+      to get more information.
+    </small>
+  </p>
+</div>
+
+<div class="modal-inner-scroll" style="min-height: 148px;">
+    <div class="list-group list-group-links"
+      
+    >
+      <button ng-repeat="protocol in vm.protocols | orderBy:'name'"
+        class="list-group-item"
+        title="{{ protocol.name | translate }}"
+        ng-click="vm.protocolCtrl.select(protocol)"
+        
+      >
+        <i c8y-icon="{{ protocol.icon || vm.CONFIG.icon }} m-r-4"></i>
+        <span>{{ protocol.name | translate }}</span>
+      </button>
+    </div>
+</div>
+
+<div class="c8y-wizard-footer">
+  <button
+    title="{{ 'Cancel' | translate }}"
+    class="btn btn-default"
+    ng-click="vm.wizardCtrl.dismiss()"
+  >
+    {{ 'Cancel' | translate }}
+  </button>
+</div>

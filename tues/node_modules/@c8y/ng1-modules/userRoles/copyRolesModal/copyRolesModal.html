@@ -1,0 +1,44 @@
+<div class="modal-header separator">
+  <h3>
+    <span translate>Copy inventory roles from user</span>
+  </h3>
+</div>
+<div class="modal-body p-b-4 p-t-8">
+  <div class="flex-row">
+    <label class="m-b-0 m-r-8" translate>Current roles </label>
+    <label title="{{ 'Merge' | translate }}" class="c8y-radio radio-inline">
+      <input type="radio" ng-model="vm.process" ng-value="'merge'" />
+      <span></span>
+      <span>{{ 'Merge' | translate }}</span>
+    </label>
+    <label title="{{ 'Replace' | translate }}" class="radio-inline c8y-radio">
+      <input type="radio" ng-model="vm.process" ng-value="'replace'" />
+      <span></span>
+      <span>{{ 'Replace' | translate }}</span>
+    </label>
+  </div>
+</div>
+
+<c8y-ui-user-picker model-type="object" hidden-users="vm.resolve.userTo" ng-model="vm.selectedUser">
+</c8y-ui-user-picker>
+
+<div class="modal-footer">
+  <button
+    type="button"
+    title="{{ 'Cancel' | translate }}"
+    class="btn btn-default"
+    ng-click="vm.modalInstance.dismiss()"
+  >
+    {{ 'Cancel' | translate }}
+  </button>
+
+  <button
+    type="button"
+    title="{{ 'Copy' | translate }}"
+    class="btn btn-primary"
+    ng-disabled="!vm.selectedUser || vm.copying"
+    ng-click="vm.copy()"
+  >
+    {{ 'Copy' | translate }}
+  </button>
+</div>

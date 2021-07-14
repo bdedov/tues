@@ -1,0 +1,27 @@
+<fieldset ng-disabled="form.readonly" class=" d-contents schema-form-fieldset {{ form.htmlClass }}">
+  <div class="c8y-list__item bg-inherit" ng-class="{'expanded': collapseOpen}">
+    <div class="c8y-list__item__block sticky-top" >
+      <button class="c8y-list__item__body btn-clean" ng-click="collapseOpen = !collapseOpen">
+        {{ form.title | translate }}
+        <div
+          class="help-block"
+          ng-show="form.description"
+          ng-bind-html="form.description | translate"
+        ></div>
+      </button>
+      <div class="c8y-list__item__actions">
+        <button class="collapse-btn" ng-click="collapseOpen = !collapseOpen">
+          <i c8y-icon="chevron-down"></i>
+        </button>
+      </div>
+   
+    </div>
+  
+    <div uib-collapse="!collapseOpen" class="bg-gray-white">
+      <div class="separator-top-bottom c8y-list__item__collapse--container">
+        <sf-decorator ng-repeat="item in form.items" form="item" class="d-block"></sf-decorator>
+      </div>
+    </div>
+  </div>
+</fieldset>
+

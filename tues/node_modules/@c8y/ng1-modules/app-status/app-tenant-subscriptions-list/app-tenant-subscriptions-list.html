@@ -1,0 +1,74 @@
+<div class="sticky-top has-sticky-card-header hidden-xs">
+  <div class="c8y-list__item">
+    <div class="c8y-list__item__block">
+      <div class="c8y-list__item__icon p-l-0">
+        <i class="fa"></i>
+      </div>
+      <div class="c8y-list__item__body">
+        <div class="content-flex-350">
+          <div class="col-3">
+            <label class="m-0">{{'Tenant' | translate}}</label>
+          </div>
+          <div class="col-3">
+            <label class="m-0">{{'Active' | translate}}</label>
+          </div>
+          <div class="col-3">
+            <label class="m-0">{{'Unhealthy' | translate}}</label>
+          </div>
+          <div class="col-3">
+            <label class="m-0">{{'Desired' | translate}}</label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<ul class="c8y-list__group">
+  <li
+    class="c8y-list__item collapsible"
+    ng-class="{'expanded': vm.isOpen(subscription)}"
+    ng-repeat="subscription in vm.subscriptionsList | orderBy:'tenantName' track by subscription.tenantName"
+  >
+    <div class="c8y-list__item__block">
+      <div class="c8y-list__item__icon p-l-0">
+        <i
+          c8y-icon="{{ vm.getStatusIcon(subscription.status) }}"
+          uib-tooltip="{{ subscription.status | translate }}"
+          tooltip-placement="right"
+        ></i>
+      </div>
+      <div class="c8y-list__item__body">
+        <div class="content-flex-350">
+          <div class="col-3 text-truncate" title="{{ subscription.tenantName }}">
+            <span class="text-label-small visible-xs-inline" translate>Tenant</span> {{ subscription.tenantName }}
+          </div>
+          <div class="col-3 text-truncate" title="{{'Active' | translate}} {{ subscription.active || 0 }}">
+            <span class="text-label-small visible-xs-inline" translate>Active</span> {{ subscription.active || 0 }}
+          </div>
+          <div class="col-3 text-truncate" title="{{'Unhealthy' | translate}} {{ subscription.unhealthy || 0 }}">
+            <span class="text-label-small visible-xs-inline" translate>Unhealthy</span> {{ subscription.unhealthy || 0 }}
+          </div>
+          <div class="col-3 text-truncate" title="{{'Desired' | translate}} {{ subscription.desired || 0 }}">
+            <span class="text-label-small visible-xs-inline" translate>Desired</span> {{ subscription.desired || 0 }}
+          </div>
+        </div>
+      </div>
+      <div class="c8y-list__item__actions" ng-if="vm.showDetails(subscription)">
+        <button
+          type="button"
+          title="{{ 'Expand' | translate }}"
+          class="collapse-btn"
+          ng-click="vm.openItem(subscription)"
+        >
+          <i c8y-icon="chevron-down"></i>
+        </button>
+      </div>
+    </div>
+    <div uib-collapse="!vm.isOpen(subscription)">
+      <c8y-app-instances-details
+        instances-details="vm.getSubscriptionInstances(subscription)"
+        class="c8y-list__item__collapse--container d-block"
+      ></c8y-app-instances-details>
+    </div>
+  </li>
+</ul>

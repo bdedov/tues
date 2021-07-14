@@ -1,0 +1,33 @@
+<c8y-ui-title-set title="'Remote access' | translate"></c8y-ui-title-set>
+
+<div class="row">
+  <div class="col-xs-12 col-md-6">
+    <form class="card" name="remoteAccessSettingsForm" ng-submit="vm.updateSettings()" novalidate>
+      <div class="card-header">
+        <h4 class="card-title" translate>Settings</h4>
+      </div>
+      <hr />
+      <div class="card-block" translate>
+        Auto save host key on first connection on Remote access tab.
+      </div>
+      <div class="card-block">
+        <label title="{{ 'Auto save host key' | translate }}" class="c8y-checkbox">
+          <input type="checkbox" ng-model="vm.hostkeyAutosave" ng-checked="vm.hostkeyAutosave" />
+          <span></span>
+          <span>{{ 'Auto save host key' | translate }}</span>
+        </label>
+      </div>
+
+      <div class="card-footer">
+        <button
+          title="{{ 'Save' | translate }}"
+          type="submit"
+          class="btn btn-primary"
+          ng-disabled="remoteAccessSettingsForm.$invalid || remoteAccessSettingsForm.$pristine"
+        >
+          {{ 'Save' | translate }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

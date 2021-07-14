@@ -1,0 +1,29 @@
+<div ng-controller="deviceShellCtrl">
+  <c8y-ui-action-bar-set>
+    <a class="btn btn-link pull-right"
+      ng-href="#{{ getViewHistoryLink() }}"
+      title="{{ 'View history' | translate }}"
+    >
+      <i c8y-icon="history"></i>
+      {{ 'View history' | translate }}
+    </a>
+  </c8y-ui-action-bar-set>
+
+  <div class="card content-fullpage d-grid grid__col--6-6--md">
+    <div class="inner-scroll bg-white"
+      ng-include="':::PLUGIN_PATH:::/views/command.html'"
+    >
+    </div>
+      <div class="inner-scroll bg-gray-white">
+        <div class="card-header large-padding separator sticky-top">
+          <h4 class="card-title">
+            {{ 'Operations' | translate }}
+          </h4>
+        </div>
+          <div class="card-block large-padding">
+            <c8y-ui-operations-timeline operations="operations">
+            </c8y-ui-operations-timeline>
+          </div>
+      </div>
+  </div>
+</div>

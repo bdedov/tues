@@ -1,0 +1,122 @@
+<c8y-breadcrumbs-set>
+  <c8y-breadcrumbs-item
+    path="#tenants"
+    label="{{ 'Tenants' | translate }}"
+    icon="c8y-sub-tenants"
+  ></c8y-breadcrumbs-item>
+</c8y-breadcrumbs-set>
+
+<div class="card d-grid content-fullpage grid__col--6-6--md">
+  <c8y-subscribed-applications
+    dissociate="dissociate"
+    class="inner-scroll bg-white"
+    associated-applications="associatedApplications"
+  >
+  </c8y-subscribed-applications>
+
+  <div class="inner-scroll bg-gray-white">
+    <div class="card-header sticky-top separator large-padding">
+      <h4 class="card-title">
+        {{ 'Available applications' | translate }}
+        <button class="btn-clean text-14"
+          type="button"
+          uib-popover-template="popoverTemplateUrl"
+          popover-placement="right"
+          popover-append-to-body="true"
+        >
+          <i c8y-icon="question-circle-o" class="text-info"></i>
+        </button>
+      </h4>
+    </div>
+    <div class="separator-bottom bg-inherit large-padding p-t-8 p-b-8 sticky-top has-sticky-card-header">
+      <div class="d-flex">
+        <div title="{{ 'Filter tenants' | translate }}" class="input-group input-group-search m-r-8">
+          <input
+            type="search"
+            class="form-control"
+            ng-model="filter.text.$"
+            placeholder="{{ 'Filter…' | translate }}"
+          />
+          <span class="input-group-addon">
+            <i c8y-icon="search" ng-show="filter.text.$.length === 0 || !filter.text.$ "></i>
+            <i
+              c8y-icon="times"
+              class="text-muted"
+              ng-show="filter.text.$.length > 0"
+              ng-click="filter.text.$ = ''"
+            ></i>
+          </span>
+        </div>
+        <div class="flex-no-shrink d-flex">
+          <label class="control-label m-b-0 m-r-4 flex-item-v-center">{{ 'Owner' | translate }}</label>
+          <div class="c8y-select-wrapper">
+            <select
+              ng-options="owner.value as owner.label for owner in owners | orderBy:'label'"
+              ng-model="filter.owner"
+              class="form-control"
+            ></select>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-block p-t-0 large-padding bg-inherit">
+      <ul class="c8y-list__group">
+        <li
+          class="c8y-list__item collapsible bg-inherit"
+          ng-class="{'expanded': isOpen(a)}"
+          ng-repeat="a in applications|filter:filterOwner|filter:filter.text"
+        >
+          <div class="c8y-list__item__block">
+            <div class="c8y-list__item__appicon p-l-0">
+              <c8y-app-icon app="::a" class="d-contents"></c8y-app-icon>
+            </div>
+            <div class="c8y-list__item__body flex-item-middle">
+              <div class="flex-row">
+                <button class="btn-clean text-truncate"
+                  ng-click="openItem(a)"
+                 title="{{ a | humanizeAppName }}"
+                >
+                 {{ a | humanizeAppName }}
+                </button>
+                <button
+                  title="{{ 'subscribe' | translate }}"
+                  ng-click="associate(a)"
+                  class="btn btn-primary btn-xs showOnHover flex-item-right"
+                  translate
+                >
+                  subscribe
+                </button>
+              </div>
+            </div>
+            <div class="c8y-list__item__actions">
+              <button
+                type="button"
+                title="{{ 'Expand' | translate }}"
+                class="collapse-btn"
+                ng-click="openItem(a)"
+              >
+                <i c8y-icon="chevron-down"></i>
+              </button>
+            </div>
+          </div>
+          <div uib-collapse="!isOpen(a)">
+            <div class="c8y-list__item__collapse--container">
+              <div class="d-flex">
+                <p class="m-r-8">
+                  <span class="text-label-small m-r-4">{{ 'Availability' | translate }}</span> {{ a.availability }}
+                </p>
+                <p class="m-r-8">
+                  <span class="text-label-small m-r-4">{{ 'Type' | translate }}</span> {{ a.type }}
+                </p>
+                <p class="m-r-8">
+                  <span class="text-label-small m-r-4">{{ 'Owner' | translate }}</span> {{ a.owner.tenant.id }}
+                </p>
+              </div>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,1 @@
+"use strict";!function(){function e(e){e.initUi()}function c(e){e.registerFeaturesManifest()}c.$inject=["c8yLoraDevice"],e.$inject=["c8yLoraDeviceProvider"],angular.module("c8y.lora",["c8y.deviceProtocols","c8y.deviceDatabase4","c8y.deviceProtocolForDeviceDatabase4"]).config(e).run(c)}();

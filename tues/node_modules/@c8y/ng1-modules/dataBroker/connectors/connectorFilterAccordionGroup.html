@@ -1,0 +1,19 @@
+<div
+  tabindex="0"
+  class="accordion-toggle interact p-8"
+  ng-click="toggleOpen()"
+  uib-accordion-transclude="heading"
+>
+  <div class="flex-row"
+    ng-class="{ 'text-muted': isDisabled }"
+    uib-accordion-header
+  >
+    {{ heading }}
+  </div>
+</div>
+
+<div class="panel-collapse collapse"
+  uib-collapse="!isOpen"
+>
+  <div class="panel-body" ng-transclude></div>
+</div>

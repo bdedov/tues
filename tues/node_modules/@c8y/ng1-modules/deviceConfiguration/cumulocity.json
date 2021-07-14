@@ -1,0 +1,14 @@
+{
+  "name": "Device configuration",
+  "ngModules": [
+    "c8y.deviceConfiguration"
+  ],
+  "category": "Device",
+  "description": "Managing configuration of device.",
+  "less": [
+    "styles/styles.less"
+  ],
+  "js": [
+    "index.js"
+  ]
+}
