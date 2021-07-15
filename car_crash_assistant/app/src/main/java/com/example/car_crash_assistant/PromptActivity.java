@@ -16,20 +16,19 @@ public class PromptActivity extends AppCompatActivity {
     }
 
     public void affirmative_button_on_click(View view) {
-
         try
         {
             Alarm.send();
         }
         catch(JSONException exception)
         {
-            finish();
+            this.finish();
         }
 
-        finish();
+        this.finish();
     }
 
     public void negative_button_on_click(View view) {
-        finish();
+        this.finish();
     }
 }
