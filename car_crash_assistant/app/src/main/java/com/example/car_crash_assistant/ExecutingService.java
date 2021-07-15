@@ -71,4 +71,11 @@ public class ExecutingService extends Service {
 
         return START_NOT_STICKY;
     }
+
+    @Override
+    public void onTaskRemoved(Intent rootIntent) {
+        super.onTaskRemoved(rootIntent);
+
+        this.stopSelf();
+    }
 }

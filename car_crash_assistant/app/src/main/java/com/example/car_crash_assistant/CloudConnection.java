@@ -20,6 +20,7 @@ public class CloudConnection
 {
     public static final String MEASUREMENT_URL = "https://bdedov.1.stage.c8y.io/measurement/measurements";
     public static final String ALARM_URL = "https://bdedov.1.stage.c8y.io/alarm/alarms";
+    public static final String LOCATION_URL = "https://bdedov.1.stage.c8y.io/inventory/managedObjects/4719658";
     private static String auth_token;
     private static String auth_websock_token;
     private static RequestQueue queue;
@@ -66,6 +67,31 @@ public class CloudConnection
 
         queue.add(jsonRequest);
     }
+
+    public static void post_location(JSONObject coords)
+    {
+        JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.PUT, LOCATION_URL, coords,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+            }
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("Authorization", "Basic " + auth_token);
+                params.put("Content-Type", "application/json");
+                return params;
+            }
+        };
+
+        queue.add(jsonRequest);
+    }
+
 
     public static void post_alarm(JSONObject json)
     {
