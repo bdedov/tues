@@ -14,7 +14,6 @@
         android:layout_centerVertical="true"
         android:layout_marginTop="144dp"
         android:hint="username"
-        android:text="denislav.i.ivanov.2017@elsys-bg.org"
         app:layout_constraintBottom_toTopOf="@+id/password"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -29,7 +28,6 @@
         android:layout_marginTop="228dp"
         android:hint="password"
         android:inputType="textPassword"
-        android:text="75t5wwneqeNK6Qp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

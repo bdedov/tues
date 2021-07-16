@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
 
             new ExecutingService();
 
-            new Location(this);
+            new LocationSender(this);
         }
     }
 }
