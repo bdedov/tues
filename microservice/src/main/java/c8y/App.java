@@ -24,11 +24,11 @@ public class App {
     public static int j = 0;
 
     public static void check_collision(Platform platform, BigInteger sourceId, double accelerationX, double accelerationY, double accelerationZ){
-        boolean collision = false;
+        boolean collision = true;
 
-        if(accelerationX > 1.5 || accelerationY > 1.5 || accelerationZ > 1.5) {
-            collision = true;
-        }
+//        if(accelerationX > 1.5 || accelerationY > 1.5 || accelerationZ > 1.5) {
+//            collision = true;
+//        }
 
         if(collision){
             EventRepresentation event = new EventRepresentation();
@@ -44,7 +44,7 @@ public class App {
 
     public static void main (String[] args) {
         SpringApplication.run(App.class, args);
-        Platform platform = new PlatformImpl("https://bdedov.1.stage.c8y.io/", CumulocityBasicCredentials.from("tenant/username:password"));
+        Platform platform = new PlatformImpl("https://bdedov.1.stage.c8y.io/", CumulocityBasicCredentials.from("t3193151/denislav.i.ivanov.2017@elsys-bg.org:75t5wwneqeNK6Qp"));
         String[] info = new String[3];
         for(int i=0; i<3; i++){
             info[i] = "";
