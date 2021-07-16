@@ -52,9 +52,9 @@ public class MainActivity extends AppCompatActivity {
 
             this.startActivity(executing_activity_intent);
 
-            ExecutingService service = new ExecutingService();
+            new ExecutingService();
 
-            new Location().start();
+            new Location(this);
         }
     }
 }

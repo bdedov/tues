@@ -7,6 +7,8 @@ public class LocationSender
 {
     public static void send(double[] coordinates) throws JSONException
     {
+        System.out.println(coordinates[0] + " " + coordinates[1]);
+
         JSONObject object = new JSONObject();
         JSONObject location = new JSONObject();
 

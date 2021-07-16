@@ -3,7 +3,6 @@ package com.example.car_crash_assistant;
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.app.Service;
-import android.content.Context;
 import android.content.Intent;
 
 import androidx.core.app.NotificationCompat;
@@ -81,7 +80,6 @@ public class Event extends Thread
                                 context.startForeground(2, prompt_notification);
                             }
                         }
-                        System.out.println(message);
                     }
                     catch (Exception e)
                     {

@@ -58,7 +58,7 @@ public class CloudConnection
             }){
                 @Override
                 public Map<String, String> getHeaders() throws AuthFailureError {
-                    Map<String, String> params = new HashMap<String, String>();
+                    Map<String, String> params = new HashMap<>();
                     params.put("Authorization", "Basic " + auth_token);
                     params.put("Content-Type", "application/json");
                     return params;
@@ -82,7 +82,7 @@ public class CloudConnection
         }){
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> params = new HashMap<String, String>();
+                Map<String, String> params = new HashMap<>();
                 params.put("Authorization", "Basic " + auth_token);
                 params.put("Content-Type", "application/json");
                 return params;
@@ -107,7 +107,7 @@ public class CloudConnection
         }){
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> params = new HashMap<String, String>();
+                Map<String, String> params = new HashMap<>();
                 params.put("Authorization", "Basic " + auth_token);
                 params.put("Content-Type", "application/json");
                 return params;
