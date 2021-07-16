@@ -26,9 +26,9 @@ public class App {
     public static void check_collision(Platform platform, BigInteger sourceId, double accelerationX, double accelerationY, double accelerationZ){
         boolean collision = true;
 
-//        if(accelerationX > 1.5 || accelerationY > 1.5 || accelerationZ > 1.5) {
-//            collision = true;
-//        }
+       if(accelerationX > 1.5 || accelerationY > 1.5 || accelerationZ > 1.5) {
+           collision = true;
+       }
 
         if(collision){
             EventRepresentation event = new EventRepresentation();
