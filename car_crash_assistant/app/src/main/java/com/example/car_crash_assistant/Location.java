@@ -18,7 +18,7 @@ public class Location implements LocationListener {
 
         try
         {
-            location_manager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 3000, 0, this);
+            location_manager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 30000, 0, this);
         }
         catch(SecurityException exception)
         {
